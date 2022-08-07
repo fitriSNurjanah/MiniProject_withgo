@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"fmt"
 	"miniproject_products/errs"
 	"miniproject_products/logger"
 
@@ -31,6 +32,17 @@ func (s ProductRepositoryDB) FindByID(id int) (Products, *errs.AppErr) {
 	err := s.db.First(&products, "id = ?", id)
 	if err != nil {
 		logger.Error("error fetch data to products table")
+		return products, errs.NewUnexpectedError("unexpected error")
+	}
+	return products, nil
+}
+
+func (s ProductRepositoryDB) CreateProduct(products Products)(Products, *errs.AppErr){
+	err := s.db.Create(&products).Error
+	fmt.Println(err) 
+
+	if err != nil {
+		logger.Error("Error created product")
 		return products, errs.NewUnexpectedError("unexpected error")
 	}
 	return products, nil

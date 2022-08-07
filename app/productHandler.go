@@ -1,6 +1,7 @@
 package app
 
 import (
+	"miniproject_products/dto"
 	"miniproject_products/service"
 	"net/http"
 	"strconv"
@@ -33,5 +34,17 @@ func (ch *ProductHandler) getProductID(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 	}
 
+	c.JSON(http.StatusOK, products)
+}
+
+func(ch * ProductHandler) createProduct(c *gin.Context){
+	var request dto.ProductRequest
+	err := c.ShouldBindJSON(&request)
+
+	products, _:= ch.service.CreateProduct(request)
+	if err!= nil{
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
 	c.JSON(http.StatusOK, products)
 }
