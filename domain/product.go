@@ -13,6 +13,7 @@ type ProductRepository interface {
 	FindAll() ([]Products, *errs.AppErr)
 	FindByID(int) (Products, *errs.AppErr)
 	CreateProduct(Products) (Products, *errs.AppErr)
+	UpdateProduct(int, Products) (Products, *errs.AppErr)
 	DeleteProduct(int) (Products, *errs.AppErr)
 
 

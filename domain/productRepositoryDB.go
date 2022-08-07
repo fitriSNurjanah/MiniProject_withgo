@@ -48,6 +48,17 @@ func (s ProductRepositoryDB) CreateProduct(products Products)(Products, *errs.Ap
 	return products, nil
 }
 
+
+func (s ProductRepositoryDB)UpdateProduct(id int, products Products)(Products, *errs.AppErr){
+	err := s.db.Model(&products).Where("id = ? ", id).Updates(products)
+
+	if err != nil{
+		logger.Info("updating data errors")
+		return products, errs.NewUnexpectedError("unexpected error")
+	}
+	return products, nil
+}
+
 func (s ProductRepositoryDB) DeleteProduct(id int)(Products, *errs.AppErr){
 	var products Products
 	err := s.db.Delete(&products, "id = ? ", id)

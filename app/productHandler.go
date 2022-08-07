@@ -49,6 +49,21 @@ func(ch * ProductHandler) createProduct(c *gin.Context){
 	c.JSON(http.StatusOK, products)
 }
 
+
+func (ch *ProductHandler)UpdateProduct(c *gin.Context){
+	id := c.Param("id")
+	newID, _ :=strconv.Atoi(id)
+	var request dto.ProductRequest
+	err := c.ShouldBindJSON(&request)
+	products,_ := ch.service.UpdateProduct(newID, request)
+	if err != nil{
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	c.JSON(http.StatusOK, products)
+}
+
+
 func (ch *ProductHandler) DeleteProduct(c *gin.Context) {
 
 	id := c.Param("id")
