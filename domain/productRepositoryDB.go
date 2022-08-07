@@ -47,3 +47,13 @@ func (s ProductRepositoryDB) CreateProduct(products Products)(Products, *errs.Ap
 	}
 	return products, nil
 }
+
+func (s ProductRepositoryDB) DeleteProduct(id int)(Products, *errs.AppErr){
+	var products Products
+	err := s.db.Delete(&products, "id = ? ", id)
+	if err != nil {
+		logger.Error("Error Deleting Data")
+		return products, errs.NewUnexpectedError("unexpected error")
+	}
+	return products, nil
+}

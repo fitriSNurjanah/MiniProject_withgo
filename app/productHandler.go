@@ -48,3 +48,16 @@ func(ch * ProductHandler) createProduct(c *gin.Context){
 	}
 	c.JSON(http.StatusOK, products)
 }
+
+func (ch *ProductHandler) DeleteProduct(c *gin.Context) {
+
+	id := c.Param("id")
+	newId, _ := strconv.Atoi(id)
+	Products, err := ch.service.DeleteProduct(newId)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+	}
+
+	c.JSON(http.StatusOK, Products)
+}

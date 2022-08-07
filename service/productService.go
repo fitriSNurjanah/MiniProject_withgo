@@ -10,6 +10,7 @@ type ProductService interface {
 	GetAllProduct() ([]domain.Products, *errs.AppErr)
 	GetProductID(int) (domain.Products, *errs.AppErr)
 	CreateProduct(dto.ProductRequest)(domain.Products, *errs.AppErr)
+	DeleteProduct(int)(domain.Products, *errs.AppErr)
 }
 
 type DefaultProductService struct {
@@ -42,6 +43,7 @@ func (s DefaultProductService) GetProductID(id int) (domain.Products, *errs.AppE
 func (s DefaultProductService)CreateProduct(request dto.ProductRequest)(domain.Products, *errs.AppErr){
 	product := domain.Products{}
 	product.Merk = request.Merk
+	product.Price = request.Price
 	product.Description = request.Description
 
 	product, err := s.repo.CreateProduct(product)
@@ -51,3 +53,10 @@ func (s DefaultProductService)CreateProduct(request dto.ProductRequest)(domain.P
 	return product, nil
 }
 
+func (e DefaultProductService) DeleteProduct(id int) (domain.Products, *errs.AppErr) {
+	products, err := e.repo.DeleteProduct(id)
+	if err != nil {
+		return products, err
+	}
+	return products, nil
+}
