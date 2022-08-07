@@ -25,13 +25,13 @@ func (s *ProductRepositoryDB)FindAll()([]Products, *errs.AppErr){
 	return products, nil
 }
 
-// func (s ProductRepositoryDB) FindByID(id int) (Products, *errs.AppErr) {
+func (s ProductRepositoryDB) FindByID(id int) (Products, *errs.AppErr) {
 
-// 	var products Products
-// 	err := s.db.First(&products, "employee_id = ?", id)
-// 	if err != nil {
-// 		logger.Error("error fetch data to products table")
-// 		return products, errs.NewUnexpectedError("unexpected error")
-// 	}
-// 	return products, nil
-// }
+	var products Products
+	err := s.db.First(&products, "id = ?", id)
+	if err != nil {
+		logger.Error("error fetch data to products table")
+		return products, errs.NewUnexpectedError("unexpected error")
+	}
+	return products, nil
+}

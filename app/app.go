@@ -60,7 +60,7 @@ func Start() {
 	router := gin.Default()
 
 	router.GET("/products", ch.getAllProduct)
-	// router.GET("/products/:id", ch.getProductID)
+	router.GET("/products/:id", ch.getProductID)
 	router.Run(":8000")
 
 }

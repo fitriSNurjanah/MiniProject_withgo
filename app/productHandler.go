@@ -3,6 +3,7 @@ package app
 import (
 	"miniproject_products/service"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,15 +23,15 @@ func (ch *ProductHandler) getAllProduct(c*gin.Context){
 }
 
 
-// func (ch *ProductHandler) getProductID(c *gin.Context) {
+func (ch *ProductHandler) getProductID(c *gin.Context) {
 
-// 	id := c.Param("id")
-// 	newId, _ := strconv.Atoi(id)
-// 	employees, err := ch.service.GetProductID(newId)
+	id := c.Param("id")
+	newId, _ := strconv.Atoi(id)
+	products, err := ch.service.GetProductID(newId)
 
-// 	if err != nil {
-// 		c.JSON(http.StatusBadRequest, nil)
-// 	}
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+	}
 
-// 	c.JSON(http.StatusOK, employees)
-// }
+	c.JSON(http.StatusOK, products)
+}

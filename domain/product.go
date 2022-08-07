@@ -10,6 +10,6 @@ type Products struct {
 
 type ProductRepository interface {
 	FindAll() ([]Products, *errs.AppErr)
-	// FindByID(int) (Products, *errs.AppErr)
+	FindByID(int) (Products, *errs.AppErr)
 
 }
