@@ -26,3 +26,15 @@ func (s UserRepositoryDB) RegisterUser(users Users)(Users, *errs.AppErr){
 	}
 	return users, nil
 }
+
+
+func (s UserRepositoryDB)LoginUser (username string, users Users)(Users, *errs.AppErr){
+	err := s.db.Model(&users).Where("username = ? ", username).Updates(users)
+
+	if err != nil{
+		logger.Info("login user failed")
+		return users, errs.NewUnexpectedError("unexpected error")
+	}
+	return users, nil
+
+}

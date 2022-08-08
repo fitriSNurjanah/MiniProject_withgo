@@ -7,7 +7,7 @@ import (
 )
 
 type ProductService interface {
-	GetAllProduct() ([]domain.Products, *errs.AppErr)
+	GetAllProduct(dto.Pagination) (dto.Pagination, *errs.AppErr)
 	GetProductID(int) (domain.Products, *errs.AppErr)
 	CreateProduct(dto.ProductRequest)(domain.Products, *errs.AppErr)
 	UpdateProduct(int, dto.ProductRequest) (domain.Products, *errs.AppErr)
@@ -22,11 +22,11 @@ func NewProductService(repository domain.ProductRepository) DefaultProductServic
 	return DefaultProductService{repository}
 }
 
-func (s DefaultProductService) GetAllProduct() ([]domain.Products, *errs.AppErr) {
+func (s DefaultProductService) GetAllProduct(p dto.Pagination) (dto.Pagination, *errs.AppErr) {
 
-	products, err := s.repo.FindAll()
+	products, err := s.repo.FindAll(p)
 	if err != nil {
-		return nil, err
+		return products, err
 	}
 
 	return products, nil

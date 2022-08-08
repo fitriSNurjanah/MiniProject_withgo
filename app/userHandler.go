@@ -23,3 +23,12 @@ func (ch *UserHandler)registerUser (c *gin.Context){
 	}
 	c.JSON(http.StatusOK, users)
 }
+
+
+// func (ch *UserHandler)LoginUser (c *gin.Context){
+// 	var input domain.Users 
+	
+// 	// err := c.ShouldBindJSON(&input)
+	
+
+// 	}

@@ -1,6 +1,9 @@
 package domain
 
-import "miniproject_products/errs"
+import (
+	"miniproject_products/dto"
+	"miniproject_products/errs"
+)
 
 type Products struct {
 	ID          int `json:"id" db:"id"`
@@ -10,7 +13,7 @@ type Products struct {
 }
 
 type ProductRepository interface {
-	FindAll() ([]Products, *errs.AppErr)
+	FindAll(dto.Pagination) (dto.Pagination, *errs.AppErr)
 	FindByID(int) (Products, *errs.AppErr)
 	CreateProduct(Products) (Products, *errs.AppErr)
 	UpdateProduct(int, Products) (Products, *errs.AppErr)

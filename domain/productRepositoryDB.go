@@ -2,6 +2,7 @@ package domain
 
 import (
 	"fmt"
+	"miniproject_products/dto"
 	"miniproject_products/errs"
 	"miniproject_products/logger"
 
@@ -16,15 +17,31 @@ func NewProductRepositoryDB (client *gorm.DB) ProductRepositoryDB{
 	return ProductRepositoryDB{client}
 }
 
-func (s *ProductRepositoryDB)FindAll()([]Products, *errs.AppErr){
+func (s *ProductRepositoryDB)FindAll(pagination dto.Pagination)(dto.Pagination, *errs.AppErr){
+	var p dto.Pagination
+	tr := 0
+	offset := pagination.Page  * pagination.Limit
+
+
 	var products []Products
-	err := s.db.Find(&products).Error
+	err :=s.db.Limit(pagination.Limit).Offset(offset).Find(&products).Error
 	if err != nil {
-		logger.Error("error fetch data to customer table " + err.Error())
-		return nil, errs.NewUnexpectedError("unexpected database error")
+		return p, nil
 	}
-	return products, nil
+	pagination.Rows = products
+	totalRows := int64(tr)
+
+	errCount := s.db.Model(products).Count(&totalRows).Error
+
+	if errCount!= nil{
+		return p, errs.NewUnexpectedError("unexpected error")
+	}
+	return pagination, nil
 }
+
+
+
+
 
 func (s ProductRepositoryDB) FindByID(id int) (Products, *errs.AppErr) {
 

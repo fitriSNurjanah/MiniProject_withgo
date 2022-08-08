@@ -2,6 +2,7 @@ package app
 
 import (
 	"miniproject_products/dto"
+	"miniproject_products/helper"
 	"miniproject_products/service"
 	"net/http"
 	"strconv"
@@ -15,8 +16,9 @@ type ProductHandler struct {
 
 func (ch *ProductHandler) getAllProduct(c*gin.Context){
 	
-	products, err :=ch.service.GetAllProduct()
-	if err != nil{
+	pagination := helper.GeneratePaginationRequest(c)
+	products, err := ch.service.GetAllProduct(*pagination)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
