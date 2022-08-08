@@ -49,13 +49,16 @@ func Start() {
 	//wiring
 	///* setup repository
 	productRepositoryDB := domain.NewProductRepositoryDB(dbClient)
+	userRepositoryDB := domain.NewUserRepositoryDB(dbClient)
 
 
 	//Setup Service
 	ProductService := service.NewProductService(&productRepositoryDB)
+	UserService := service.NewUserService(&userRepositoryDB)
 
-	//setupHandler
+	//setupHandler	
 	ch := ProductHandler{ProductService}
+	ah := UserHandler{UserService}
 
 	router := gin.Default()
 
@@ -64,6 +67,7 @@ func Start() {
 	router.POST("/products", ch.createProduct)
 	router.DELETE("/products/:id", ch.DeleteProduct)
 	router.PUT("/products/:id", ch.UpdateProduct)
+	router.POST("/users", ah.registerUser)
 
 	router.Run(":8000")
 

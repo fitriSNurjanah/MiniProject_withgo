@@ -15,6 +15,4 @@ type ProductRepository interface {
 	CreateProduct(Products) (Products, *errs.AppErr)
 	UpdateProduct(int, Products) (Products, *errs.AppErr)
 	DeleteProduct(int) (Products, *errs.AppErr)
-
-
 }
