@@ -4,10 +4,11 @@ import (
 	"miniproject_products/domain"
 	"miniproject_products/dto"
 	"miniproject_products/errs"
+	setupdb "miniproject_products/setupDB"
 )
 
 type ProductService interface {
-	GetAllProduct(dto.Pagination) (dto.Pagination, *errs.AppErr)
+	GetAllProduct(dto.Pagination, int) (dto.Pagination, *errs.AppErr)
 	GetProductID(int) (domain.Products, *errs.AppErr)
 	CreateProduct(dto.ProductRequest)(domain.Products, *errs.AppErr)
 	UpdateProduct(int, dto.ProductRequest) (domain.Products, *errs.AppErr)
@@ -22,8 +23,17 @@ func NewProductService(repository domain.ProductRepository) DefaultProductServic
 	return DefaultProductService{repository}
 }
 
-func (s DefaultProductService) GetAllProduct(p dto.Pagination) (dto.Pagination, *errs.AppErr) {
+func (s DefaultProductService) GetAllProduct(p dto.Pagination, id int) (dto.Pagination, *errs.AppErr) {
 
+	
+
+	db := setupdb.GetClientDB()
+	userRepositoryDB := domain.NewUserRepositoryDB(db)
+	user, _ := userRepositoryDB.GetUserByID(id)
+	if user.Username == ""{
+		return p, errs.NewNotFoundError("user not found")
+	}
+	
 	products, err := s.repo.FindAll(p)
 	if err != nil {
 		return products, err

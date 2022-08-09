@@ -9,3 +9,7 @@ type Login struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
+
+type FindID struct {
+	ID int `json:"id"`
+}

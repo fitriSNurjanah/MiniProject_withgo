@@ -12,6 +12,7 @@ import (
 type UserService interface {
 	RegisterUser(dto.UserRequest)(domain.Users, *errs.AppErr)
 	LoginUser(dto.Login) (domain.Users, *errs.AppErr)
+	UserByID(int)(domain.Users, *errs.AppErr)
 }
 
 type DefaultUserService struct {
@@ -61,4 +62,12 @@ func (s DefaultUserService)LoginUser(request dto.Login)(domain.Users, *errs.AppE
 		return user, err
 	}
 	return user, nil
+}
+
+func (s DefaultUserService) UserByID(id int)(domain.Users, *errs.AppErr){
+	users, err := s.repo.GetUserByID(id)
+	if err != nil{
+		return users, err
+	}
+	return users, nil
 }

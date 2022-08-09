@@ -3,9 +3,13 @@ package app
 import (
 	"fmt"
 	"miniproject_products/domain"
+	"miniproject_products/errs"
 	"miniproject_products/logger"
 	"miniproject_products/service"
+	"net/http"
 	"os"
+	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -55,14 +59,16 @@ func Start() {
 	//Setup Service
 	ProductService := service.NewProductService(&productRepositoryDB)
 	UserService := service.NewUserService(&userRepositoryDB)
+	authService := service.NewAuthService()
 
 	//setupHandler	
 	ch := ProductHandler{ProductService}
-	ah := UserHandler{UserService}
+	ah := UserHandler{UserService, authService}
+	
 
 	router := gin.Default()
 
-	router.GET("/products", ch.getAllProduct)
+	router.GET("/products",authMiddleware(authService, UserService), ch.getAllProduct)
 	router.GET("/products/:id", ch.getProductID)
 	router.POST("/products", ch.createProduct)
 	router.DELETE("/products/:id", ch.DeleteProduct)
@@ -91,3 +97,34 @@ func getClientDB() *gorm.DB {
 
 	return db
 }
+
+func authMiddleware(authService service.AuthService, userService service.UserService) gin.HandlerFunc{
+	return func(c *gin.Context){
+
+		authHeader := c.GetHeader("Authorization")
+		if !strings.Contains(authHeader, "Bearer"){
+			appErr := errs.NewBadRequestError("Invalid token")
+			c.AbortWithStatusJSON(http.StatusUnauthorized, appErr)
+			return
+		}
+
+		tokenString := strings.Replace(authHeader, "Bearer ","",-1)
+		fmt.Println("token string", tokenString)
+
+		userID, ok, err := authService.ValidateToken(tokenString)
+		fmt.Println("userID", userID, "ok", ok, "Err", err)
+		if err != nil && userID == "" && !ok {
+			appErr := errs.NewBadRequestError("invalid token")
+			c.AbortWithStatusJSON(http.StatusUnauthorized, appErr)
+		}else{
+			idUser, _ := strconv.Atoi(userID)
+			user, err := userService.UserByID(idUser)
+			if err != nil {
+				appErr := *errs.NewBadRequestError("invalid token")
+				c.AbortWithStatusJSON(http.StatusUnauthorized, appErr)
+			}
+			c.Set("currentUser", user)
+		}
+	}
+}
+

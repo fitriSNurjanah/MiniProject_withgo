@@ -1,6 +1,8 @@
 package app
 
 import (
+	"fmt"
+	"miniproject_products/domain"
 	"miniproject_products/dto"
 	"miniproject_products/service"
 	"net/http"
@@ -8,8 +10,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type userDTO struct {
+	ID    int    `json:"id"`
+	Username string `json:"username"`
+	Token string `json:"token"`
+}
+
+func FormatuserDTO(user domain.Users, token string) userDTO {
+	userDTO := userDTO{}
+	userDTO.ID = user.ID
+	userDTO.Username = user.Username
+	userDTO.Token = token
+	return userDTO
+}
+
 type UserHandler struct {
 	service service.UserService
+	authService service.AuthService
+
 }
 
 func (ch *UserHandler)registerUser (c *gin.Context){
@@ -33,5 +51,14 @@ func (ch *UserHandler) loginUser (c *gin.Context){
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
-	c.JSON(http.StatusOK, users)
+	
+
+	token, err := ch.authService.GenerateToken(users.ID)
+	if err != nil{
+		fmt.Println("Test", token)
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	userDTO := FormatuserDTO(users, token)
+	c.JSON(http.StatusOK, userDTO)
 }

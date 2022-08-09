@@ -33,9 +33,21 @@ func (s UserRepositoryDB) RegisterUser(users Users)(Users, *errs.AppErr){
 func (u UserRepositoryDB) LoginUserInput(username string) (Users, *errs.AppErr) {
 
 	var users Users
-	err := u.db.First(&users, "username = ?", username)
+	err := u.db.First(&users, "username = ?", username).Error
 	if err != nil {
 		logger.Error("error to login user")
+		return users, errs.NewUnexpectedError("unexpected error")
+	}
+	return users, nil
+}
+
+func (u UserRepositoryDB) GetUserByID(id int) (Users, *errs.AppErr) {
+	var users Users
+	// err := u.db.First(&users, "user_id = ?", id).Error
+	err := u.db.Where("id = ?", id).Find(&users).Error
+	if err != nil {
+		fmt.Println(id)
+		logger.Error("error fetch data to users table")
 		return users, errs.NewUnexpectedError("unexpected error")
 	}
 	return users, nil

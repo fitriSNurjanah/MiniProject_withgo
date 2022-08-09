@@ -43,7 +43,8 @@ func (s *ProductRepositoryDB)FindAll(pagination dto.Pagination)(dto.Pagination, 
 func (s ProductRepositoryDB) FindByID(id int) (Products, *errs.AppErr) {
 
 	var products Products
-	err := s.db.First(&products, "id = ?", id)
+	// err := s.db.First(&products, "id = ?", id)
+	err := s.db.Where(&products, "id = ? ", id).Find(&products).Error
 	if err != nil {
 		logger.Error("error fetch data to products table")
 		return products, errs.NewUnexpectedError("unexpected error")
