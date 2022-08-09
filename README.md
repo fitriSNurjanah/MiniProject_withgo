@@ -5,6 +5,8 @@
 ## **FOLDER STRUCTURE**
 
 miniproject  
+├─ API DOC  
+│ └─ MiniProject.postman_collection.json  
 ├─ app  
 │ ├─ app.go  
 │ ├─ productHandler.go  
@@ -17,8 +19,6 @@ miniproject
 │ ├─ user.go  
 │ └─ userRepositoryDB.go  
 ├─ dto  
-│ ├─ loginRequest.go  
-│ ├─ loginResponse.go  
 │ ├─ productPagination.go  
 │ ├─ productRequest.go  
 │ ├─ productResponse.go  
@@ -30,9 +30,11 @@ miniproject
 ├─ logger  
 │ └─ logger.go  
 ├─ service  
+│ ├─ authService.go  
 │ ├─ productService.go  
-│ ├─ productService_test.go  
 │ └─ userService.go  
+├─ setupDB  
+│ └─ setupDB.go  
 ├─ go.mod  
 ├─ go.sum  
 ├─ main.go  
@@ -40,52 +42,52 @@ miniproject
 
 ## Package Used to create REST API
 
-go get -u github.com/gin-gonic/gin
-go get -u github.com/joho/godotenv
-go get -u gorm.io/gorm
-gorm.io/driver/postgres
-go get -u go.uber.org/zap
-go get -u github.com/golang-jwt/jwt/v4
+go get -u github.com/gin-gonic/gin<br>
+go get -u github.com/joho/godotenv<br>
+go get -u gorm.io/gorm<br>
+gorm.io/driver/postgres<br>
+go get -u go.uber.org/zap<br>
+go get -u github.com/golang-jwt/jwt/v4<br><br>
 
 ## Setting Configure File
 
-SERVER_ADDRESS=localhost # Server Addreaa
-SERVER_PORT=8080 # Server Port
-DB_USER=postgres # Postgres
-DB_PASSWD=fitri123 # Database Password
-DB_ADDR=localhost # Database Host
-DB_PORT=5432 # Database Port
-DB_NAME=projects # Database Name
+SERVER_ADDRESS=localhost # Server Address<br>
+SERVER_PORT=8080 # Server Port<br>
+DB_USER=postgres # Postgres<br>
+DB_PASSWD=fitri123 # Database Password<br>
+DB_ADDR=localhost # Database Host<br>
+DB_PORT=5432 # Database Port<br>
+DB_NAME=projects # Database Name<br>
 
 ## Running Project
 
-Go run .
+**Go run .**
 
 ## Create Table Database
 
-CREATE TABLE products
-( id serial NOT NULL,
-merk char(50) NOT NULL,
-price int,
-description char(50)
-);
+CREATE TABLE products<br>
+( id serial NOT NULL,<br>
+merk char(50) NOT NULL,<br>
+price int,<br>
+description char(50)<br>
+);<br><br>
 
-INSERT INTO products
-(id, merk, price, description)
-VALUES
-(1,'samsung',500,'samsung z flip');
+INSERT INTO products<br>
+(id, merk, price, description)<br>
+VALUES<br>
+(1,'samsung',500,'samsung z flip');<br><br><br>
 
-CREATE TABLE users
-( id int NOT NULL,
-username char(50) NOT NULL,
-password char(50),
-CONSTRAINT users_pk PRIMARY KEY (id)
-);
+CREATE TABLE users<br>
+( id int NOT NULL,<br>
+username char(50) NOT NULL,<br>
+password char(50),<br>
+CONSTRAINT users_pk PRIMARY KEY (id)<br>
+);<br><br>
 
-INSERT INTO users
-(id, username, password)
-VALUES
-(1,'admin','admin');
+INSERT INTO users<br>
+(id, username, password)<br>
+VALUES<br>
+(1,'admin','admin');<br>
 
 ## API Endpoint
 
@@ -98,18 +100,17 @@ VALUES
 
 ## Create New Product
 
-1. localhost:8000/products
-   {
-   "merk" : "Oppo",
-   "price" : 15,
-   "description" : "Oppo A21"
+localhost:8000/products<br>
+{<br>
+"merk" : "Oppo",<br>
+"price" : 15,<br>
+"description" : "Oppo A21"<br>
+}<br>
 
-}
-
-output
-{
-"id": 7,
-"merk": "Oppo",
-"price": 15,
-"description": "Oppo A21"
+**output**<br>
+{<br>
+"id": 7,<br>
+"merk": "Oppo",<br>
+"price": 15,<br>
+"description": "Oppo A21"<br>
 }
