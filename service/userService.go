@@ -11,6 +11,7 @@ import (
 
 type UserService interface {
 	RegisterUser(dto.UserRequest)(domain.Users, *errs.AppErr)
+	LoginUser(dto.Login) (domain.Users, *errs.AppErr)
 }
 
 type DefaultUserService struct {
@@ -39,4 +40,25 @@ func (s DefaultUserService)RegisterUser(request dto.UserRequest)(domain.Users, *
 	}
 	return user, nil
 
+}
+
+
+func (s DefaultUserService)LoginUser(request dto.Login)(domain.Users, *errs.AppErr){
+	Userneme := request.Username
+	Password := request.Password
+
+	user, err := s.repo.LoginUserInput(Userneme)
+	if err != nil {
+		return user, err
+	}
+
+	if Userneme == ""{
+		return user, err
+	}
+
+	errByc := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(Password))
+	if errByc != nil{
+		return user, err
+	}
+	return user, nil
 }

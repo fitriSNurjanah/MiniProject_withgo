@@ -1,8 +1,8 @@
 # Golang Restful API using GORM ORM (Postgres), Gin, JWT
 
-## this is a mini prokject with go
+### this is a mini prokject with go
 
-# **FOLDER STRUCTURE**
+## **FOLDER STRUCTURE**
 
 miniproject  
 ├─ app  
@@ -57,11 +57,11 @@ DB_ADDR=localhost # Database Host
 DB_PORT=5432 # Database Port
 DB_NAME=projects # Database Name
 
-# **Running Project**
+## Running Project
 
 Go run .
 
-# Create Table Database
+## Create Table Database
 
 CREATE TABLE products
 ( id serial NOT NULL,
@@ -87,7 +87,8 @@ INSERT INTO users
 VALUES
 (1,'admin','admin');
 
-# API Endpoint
+## API Endpoint
+
     router.GET("/products", ch.getAllProduct)  search with Get All Product
     router.GET("/products/:id", ch.getProductID) search with id
     router.POST("/products", ch.createProduct) create new product
@@ -96,18 +97,19 @@ VALUES
     router.POST("/users", ah.registerUser) create new user
 
 ## Create New Product
+
 1. localhost:8000/products
-{
-    "merk" : "Oppo",
-    "price" : 15,
-    "description" : "Oppo A21"
+   {
+   "merk" : "Oppo",
+   "price" : 15,
+   "description" : "Oppo A21"
 
 }
 
 output
 {
-    "id": 7,
-    "merk": "Oppo",
-    "price": 15,
-    "description": "Oppo A21"
+"id": 7,
+"merk": "Oppo",
+"price": 15,
+"description": "Oppo A21"
 }

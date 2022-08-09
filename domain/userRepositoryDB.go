@@ -16,6 +16,8 @@ func NewUserRepositoryDB (client *gorm.DB) UserRepositoryDB{
 	return UserRepositoryDB{client}
 }
 
+
+
 func (s UserRepositoryDB) RegisterUser(users Users)(Users, *errs.AppErr){
 	err := s.db.Create(&users).Error
 	fmt.Println(err)
@@ -28,13 +30,13 @@ func (s UserRepositoryDB) RegisterUser(users Users)(Users, *errs.AppErr){
 }
 
 
-func (s UserRepositoryDB)LoginUser (username string, users Users)(Users, *errs.AppErr){
-	err := s.db.Model(&users).Where("username = ? ", username).Updates(users)
+func (u UserRepositoryDB) LoginUserInput(username string) (Users, *errs.AppErr) {
 
-	if err != nil{
-		logger.Info("login user failed")
+	var users Users
+	err := u.db.First(&users, "username = ?", username)
+	if err != nil {
+		logger.Error("error to login user")
 		return users, errs.NewUnexpectedError("unexpected error")
 	}
 	return users, nil
-
 }

@@ -68,6 +68,8 @@ func Start() {
 	router.DELETE("/products/:id", ch.DeleteProduct)
 	router.PUT("/products/:id", ch.UpdateProduct)
 	router.POST("/users", ah.registerUser)
+	router.GET("/login", ah.loginUser)
+
 
 	router.Run(":8000")
 

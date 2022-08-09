@@ -40,9 +40,6 @@ func (s *ProductRepositoryDB)FindAll(pagination dto.Pagination)(dto.Pagination, 
 }
 
 
-
-
-
 func (s ProductRepositoryDB) FindByID(id int) (Products, *errs.AppErr) {
 
 	var products Products

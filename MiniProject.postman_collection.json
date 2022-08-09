@@ -1,0 +1,167 @@
+info:
+  _postman_id: 18d32134-4260-429f-9e65-1d52e2c365c8
+  name: MiniProject
+  schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+  _exporter_id: '22351836'
+item:
+  - name: Products
+    item:
+      - name: GetALL
+        request:
+          method: GET
+          header: []
+          url:
+            raw: localhost:8000/products
+            host:
+              - localhost
+            port: '8000'
+            path:
+              - products
+        response: []
+      - name: GetByID
+        request:
+          method: GET
+          header: []
+          url:
+            raw: localhost:8000/products/4
+            host:
+              - localhost
+            port: '8000'
+            path:
+              - products
+              - '4'
+        response: []
+      - name: Create
+        request:
+          method: POST
+          header:
+            - key: Content-Type
+              value: application/json
+              type: text
+          body:
+            mode: raw
+            raw: "{\r\n    \"merk\" : \"Vivo\",\r\n    \"price\" : 20,\r\n    \"description\" : \"vivo terbaru\"\r\n\r\n}"
+          url:
+            raw: localhost:8000/products
+            host:
+              - localhost
+            port: '8000'
+            path:
+              - products
+        response: []
+      - name: Delete
+        request:
+          method: DELETE
+          header: []
+          url:
+            raw: localhost:8000/products/6
+            host:
+              - localhost
+            port: '8000'
+            path:
+              - products
+              - '6'
+        response: []
+      - name: Update
+        request:
+          method: PUT
+          header:
+            - key: Content-Type
+              value: application/json
+              type: text
+          body:
+            mode: raw
+            raw: "{\r\n    \"merk\" : \"Xiaomi\",\r\n    \"price\" : 50,\r\n    \"description\" : \"Xiaomi note 9\"\r\n\r\n}"
+          url:
+            raw: localhost:8000/products/5
+            host:
+              - localhost
+            port: '8000'
+            path:
+              - products
+              - '5'
+        response: []
+		info:
+		_postman_id: 18d32134-4260-429f-9e65-1d52e2c365c8
+		name: MiniProject
+		schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+		_exporter_id: '22351836'
+	  item:
+		- name: Products
+		  item:
+			- name: GetALL
+			  request:
+				method: GET
+				header: []
+				url:
+				  raw: localhost:8000/products
+				  host:
+					- localhost
+				  port: '8000'
+				  path:
+					- products
+			  response: []
+			- name: GetByID
+			  request:
+				method: GET
+				header: []
+				url:
+				  raw: localhost:8000/products/4
+				  host:
+					- localhost
+				  port: '8000'
+				  path:
+					- products
+					- '4'
+			  response: []
+			- name: Create
+			  request:
+				method: POST
+				header:
+				  - key: Content-Type
+					value: application/json
+					type: text
+				body:
+				  mode: raw
+				  raw: "{\r\n    \"merk\" : \"Vivo\",\r\n    \"price\" : 20,\r\n    \"description\" : \"vivo terbaru\"\r\n\r\n}"
+				url:
+				  raw: localhost:8000/products
+				  host:
+					- localhost
+				  port: '8000'
+				  path:
+					- products
+			  response: []
+			- name: Delete
+			  request:
+				method: DELETE
+				header: []
+				url:
+				  raw: localhost:8000/products/6
+				  host:
+					- localhost
+				  port: '8000'
+				  path:
+					- products
+					- '6'
+			  response: []
+			- name: Update
+			  request:
+				method: PUT
+				header:
+				  - key: Content-Type
+					value: application/json
+					type: text
+				body:
+				  mode: raw
+				  raw: "{\r\n    \"merk\" : \"Xiaomi\",\r\n    \"price\" : 50,\r\n    \"description\" : \"Xiaomi note 9\"\r\n\r\n}"
+				url:
+				  raw: localhost:8000/products/5
+				  host:
+					- localhost
+				  port: '8000'
+				  path:
+					- products
+					- '5'
+			  response: []
+	  

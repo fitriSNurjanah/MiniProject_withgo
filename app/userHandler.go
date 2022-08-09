@@ -24,11 +24,14 @@ func (ch *UserHandler)registerUser (c *gin.Context){
 	c.JSON(http.StatusOK, users)
 }
 
+func (ch *UserHandler) loginUser (c *gin.Context){
+	var request dto.Login
+	err := c.ShouldBindJSON(&request)
 
-// func (ch *UserHandler)LoginUser (c *gin.Context){
-// 	var input domain.Users 
-	
-// 	// err := c.ShouldBindJSON(&input)
-	
-
-// 	}
+	users, _ := ch.service.LoginUser(request)
+	if err != nil{
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	c.JSON(http.StatusOK, users)
+}
